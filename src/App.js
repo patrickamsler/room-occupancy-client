@@ -1,26 +1,47 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import VectorMap, {
+  Layer,
+  Tooltip,
+  Label,
+} from 'devextreme-react/vector-map';
+
+import { roomsData, buildingData } from './data.js';
+
+const projection = {
+  to: ([l, lt]) => [l / 100, lt / 100],
+  from: ([x, y]) => [x * 100, y * 100]
+};
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <VectorMap
+          id="vector-map"
+          maxZoomFactor={4}
+          projection={projection}
+      >
+        <Layer
+            dataSource={buildingData}
+            hoverEnabled={false}
+            name="building">
+        </Layer>
+        <Layer
+            dataSource={roomsData}
+            name="rooms"
+            borderWidth={1}
+            color="transparent">
+          <Label enabled={true} dataField="name"></Label>
+        </Layer>
+        <Tooltip
+            enabled={true}
+            customizeTooltip={customizeTooltip}
+        ></Tooltip>
+      </VectorMap>
   );
 }
 
-export default App;
+function customizeTooltip(arg) {
+  if (arg.layer.name === 'rooms') {
+    return { text: `Square: ${arg.attribute('square')} ft&#178` };
+  }
+}
