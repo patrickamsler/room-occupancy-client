@@ -29,19 +29,37 @@ export default function App() {
             dataSource={roomsData}
             name="rooms"
             borderWidth={1}
+            customize={customizeLayer}
             color="transparent">
-          <Label enabled={true} dataField="name"></Label>
+          <Label enabled={true} dataField="name" />
         </Layer>
         <Tooltip
             enabled={true}
             customizeTooltip={customizeTooltip}
-        ></Tooltip>
+        />
       </VectorMap>
   );
 }
 
-function customizeTooltip(arg) {
+const customizeTooltip = (arg) => {
   if (arg.layer.name === 'rooms') {
     return { text: `Square: ${arg.attribute('square')} ft&#178` };
   }
+}
+
+const customizeLayer = (elements) => {
+  elements.forEach((element) => {
+    console.log(element.attribute('name'));
+    const roomName = element.attribute('name');
+    if (roomName === "Room 1") {
+      element.applySettings({
+        color: '#C6EFCE', //free
+      });
+    }
+    if (roomName === "Room 3") {
+      element.applySettings({
+        color: '#FFC7CE', //occupied
+      });
+    }
+  });
 }
