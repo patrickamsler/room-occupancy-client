@@ -6,7 +6,7 @@ import VectorMap, {
     Label,
 } from 'devextreme-react/vector-map';
 
-import { officeOutline, roomsData, buildingData } from './data.js';
+import { officeOutline, roomsData } from './data.js';
 
 const projection = {
     to: ([l, lt]) => [l / 120, lt / 120],
@@ -25,14 +25,14 @@ const FloorPlan = () => {
                 hoverEnabled={false}
                 name="building">
             </Layer>
-            {/*<Layer*/}
-            {/*    dataSource={roomsData}*/}
-            {/*    name="rooms"*/}
-            {/*    borderWidth={1}*/}
-            {/*    customize={customizeLayer}*/}
-            {/*    color="transparent">*/}
-            {/*    <Label enabled={true} dataField="name" />*/}
-            {/*</Layer>*/}
+            <Layer
+                dataSource={roomsData}
+                name="rooms"
+                borderWidth={1}
+                customize={customizeLayer}
+                color="transparent">
+                <Label enabled={true} dataField="name" />
+            </Layer>
             <Tooltip
                 enabled={true}
                 customizeTooltip={customizeTooltip}
@@ -51,12 +51,17 @@ const customizeLayer = (elements) => {
     elements.forEach((element) => {
         console.log(element.attribute('name'));
         const roomName = element.attribute('name');
-        if (roomName === "Room 1") {
+        if (roomName === "Room-01") {
             element.applySettings({
                 color: '#C6EFCE', //free
             });
         }
-        if (roomName === "Room 3") {
+        if (roomName === "Room-02") {
+            element.applySettings({
+                color: '#FFC7CE', //occupied
+            });
+        }
+        if (roomName === "Room-03") {
             element.applySettings({
                 color: '#FFC7CE', //occupied
             });
