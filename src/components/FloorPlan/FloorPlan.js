@@ -6,33 +6,33 @@ import VectorMap, {
     Label,
 } from 'devextreme-react/vector-map';
 
-import { roomsData, buildingData } from './data.js';
+import { officeOutline, roomsData, buildingData } from './data.js';
 
 const projection = {
-    to: ([l, lt]) => [l / 100, lt / 100],
-    from: ([x, y]) => [x * 100, y * 100]
+    to: ([l, lt]) => [l / 120, lt / 120],
+    from: ([x, y]) => [x * 120, y * 120]
 };
 
 const FloorPlan = () => {
     return (
         <VectorMap
             id="vector-map"
-            maxZoomFactor={4}
+            maxZoomFactor={3}
             projection={projection}
         >
             <Layer
-                dataSource={buildingData}
+                dataSource={officeOutline}
                 hoverEnabled={false}
                 name="building">
             </Layer>
-            <Layer
-                dataSource={roomsData}
-                name="rooms"
-                borderWidth={1}
-                customize={customizeLayer}
-                color="transparent">
-                <Label enabled={true} dataField="name" />
-            </Layer>
+            {/*<Layer*/}
+            {/*    dataSource={roomsData}*/}
+            {/*    name="rooms"*/}
+            {/*    borderWidth={1}*/}
+            {/*    customize={customizeLayer}*/}
+            {/*    color="transparent">*/}
+            {/*    <Label enabled={true} dataField="name" />*/}
+            {/*</Layer>*/}
             <Tooltip
                 enabled={true}
                 customizeTooltip={customizeTooltip}
