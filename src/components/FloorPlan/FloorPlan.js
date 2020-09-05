@@ -1,20 +1,62 @@
 import React from 'react';
 
-import VectorMap, {
-    Layer,
-    Tooltip,
-    Label,
-} from 'devextreme-react/vector-map';
+import VectorMap, {Label, Layer, Tooltip,} from 'devextreme-react/vector-map';
 
-import { officeOutline, roomsData } from './data.js';
+import {officeOutline, roomsData} from './data.js';
 
 const projection = {
     to: ([l, lt]) => [l / 120, lt / 120],
     from: ([x, y]) => [x * 120, y * 120]
 };
 
-const FloorPlan = (data) => {
-    console.log(JSON.stringify(data, null, 2));
+const colorOccupied = '#FFC7CE';
+const colorFree = '#C6EFCE';
+
+const FloorPlan = ({data}) => {
+
+    const getSensor = (roomName) => data.find(sensor => sensor.id === roomName);
+
+    const getRoomColor = (roomName) => {
+        const sensor = getSensor(roomName);
+        if (sensor) {
+            return sensor.occupancy === 0 ? colorFree : colorOccupied;
+        }
+        return "transparent";
+    }
+
+    const roomLayers = roomsData.map(room => {
+        const roomName = room.features[0].properties.name;
+        const color = getRoomColor(roomName);
+        return (
+            <Layer
+                key={roomName}
+                dataSource={room}
+                name={roomName}
+                borderWidth={1}
+                // customize={customizeLayer}
+                color={color}>
+                <Label enabled={true} dataField="name"/>
+            </Layer>
+        )}
+    );
+
+    const customizeTooltip = (arg) => {
+        console.log(arg);
+        if (arg.layer.name.startsWith("Room")) {
+            return { text: `Square: ${arg.attribute('square')} ft&#178` };
+        }
+    }
+
+    let toolTip;
+    if (data && data.length > 0) {
+        toolTip = (
+            <Tooltip
+                enabled={true}
+                customizeTooltip={customizeTooltip}
+            />
+        );
+    }
+
     return (
         <VectorMap
             id="vector-map"
@@ -26,48 +68,10 @@ const FloorPlan = (data) => {
                 hoverEnabled={false}
                 name="building">
             </Layer>
-            <Layer
-                dataSource={roomsData}
-                name="rooms"
-                borderWidth={1}
-                customize={customizeLayer}
-                color="transparent">
-                <Label enabled={true} dataField="name" />
-            </Layer>
-            <Tooltip
-                enabled={true}
-                customizeTooltip={customizeTooltip}
-            />
+            {roomLayers}
+            {toolTip}
         </VectorMap>
     );
-}
-
-const customizeTooltip = (arg) => {
-    if (arg.layer.name === 'rooms') {
-        return { text: `Square: ${arg.attribute('square')} ft&#178` };
-    }
-}
-
-const customizeLayer = (elements) => {
-    elements.forEach((element) => {
-        console.log(element.attribute('name'));
-        const roomName = element.attribute('name');
-        if (roomName === "Room-01") {
-            element.applySettings({
-                color: '#C6EFCE', //free
-            });
-        }
-        if (roomName === "Room-02") {
-            element.applySettings({
-                color: '#FFC7CE', //occupied
-            });
-        }
-        if (roomName === "Room-03") {
-            element.applySettings({
-                color: '#FFC7CE', //occupied
-            });
-        }
-    });
 }
 
 export default FloorPlan;

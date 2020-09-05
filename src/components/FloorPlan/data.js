@@ -48,57 +48,69 @@ export const officeOutline = {
     ]
 };
 
-export const roomsData = {
-    type: 'FeatureCollection',
-    features: [
-        {
-            type: 'Feature',
-            properties: {
-                name: 'Room-01',
-                square: 342,
-                capacity: 12
-            },
-            geometry: {
-                type: 'Polygon',
-                coordinates: [[
-                    [-175, -95],
-                    [-175, 95],
-                    [-90, 95],
-                    [-90, -95],
-                ]]
+export const roomsData = [
+    {
+        type: 'FeatureCollection',
+        features: [
+            {
+                type: 'Feature',
+                properties: {
+                    name: 'Room-01',
+                    square: 342,
+                    capacity: 12
+                },
+                geometry: {
+                    type: 'Polygon',
+                    coordinates: [[
+                        [-175, -95],
+                        [-175, 95],
+                        [-90, 95],
+                        [-90, -95],
+                    ]]
+                }
             }
-        }, {
-            type: 'Feature',
-            properties: {
-                name: 'Room-03',
-                square: 89,
-                capacity: 2
-            },
-            geometry: {
-                type: 'Polygon',
-                coordinates: [[
-                    [115, -95],
-                    [115, -40],
-                    [175, -40],
-                    [175, -95],
-                ]]
+        ]
+    }, {
+        type: 'FeatureCollection',
+        features: [
+            {
+                type: 'Feature',
+                properties: {
+                    name: 'Room-03',
+                    square: 89,
+                    capacity: 2
+                },
+                geometry: {
+                    type: 'Polygon',
+                    coordinates: [[
+                        [115, -95],
+                        [115, -40],
+                        [175, -40],
+                        [175, -95],
+                    ]]
+                }
             }
-        }, {
-            type: 'Feature',
-            properties: {
-                name: 'Room-02',
-                square: 183,
-                capacity: 4
+        ]
+    }, {
+        type: 'FeatureCollection',
+        features: [
+            {
+                type: 'Feature',
+                properties: {
+                    name: 'Room-02',
+                    square: 183,
+                    capacity: 4
+                },
+                geometry: {
+                    type: 'Polygon',
+                    coordinates: [[
+                        [115, -35],
+                        [115, 60],
+                        [175, 60],
+                        [175, -35],
+                    ]]
+                }
             },
-            geometry: {
-                type: 'Polygon',
-                coordinates: [[
-                    [115, -35],
-                    [115, 60],
-                    [175, 60],
-                    [175, -35],
-                ]]
-            }
-        },
-    ]
-};
+        ]
+    }
+];
