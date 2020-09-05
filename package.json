@@ -10,7 +10,8 @@
     "devextreme-react": "20.1.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "react-use-websocket": "^2.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

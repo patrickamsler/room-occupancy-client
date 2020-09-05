@@ -13,7 +13,8 @@ const projection = {
     from: ([x, y]) => [x * 120, y * 120]
 };
 
-const FloorPlan = () => {
+const FloorPlan = (data) => {
+    console.log(JSON.stringify(data, null, 2));
     return (
         <VectorMap
             id="vector-map"
