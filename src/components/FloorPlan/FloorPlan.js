@@ -41,10 +41,24 @@ const FloorPlan = ({data}) => {
     );
 
     const customizeTooltip = (arg) => {
-        console.log(arg);
-        if (arg.layer.name.startsWith("Room")) {
-            return { text: `Square: ${arg.attribute('square')} ft&#178` };
+        const layerName = arg.layer.name;
+        if (!layerName.startsWith("Room")) {
+            return;
         }
+        const sensor = getSensor(layerName);
+        if (!sensor) {
+            return;
+        }
+        const temp = sensor.temperature;
+        const humidity = sensor.humidity;
+        const light = sensor.light;
+        const capacity = arg.attribute('capacity');
+
+        let text = `Temperature ${temp}&#8451 <br>`;
+        text += `Humidity: ${humidity}% <br>`;
+        text += `Light: ${light} Lux <br>`;
+        text += `Capacity: ${capacity} person`;
+        return { html: text};
     }
 
     let toolTip;
